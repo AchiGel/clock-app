@@ -4,53 +4,54 @@ import sunIcon from "../assets/desktop/icon-sun.svg";
 import { useEffect, useState } from "react";
 
 function Time(props: any) {
-  const [currentTime, setCurrentTime] = useState("");
-  const [clientIp, setClientIp] = useState("");
-  const [country, setCountry] = useState("");
-  const [city, setCity] = useState("");
+  const [currentTime, setCurrentTime] = useState<string>("");
+  const [clientIp, setClientIp] = useState<string>("");
+  const [country, setCountry] = useState<string>("");
+  const [city, setCity] = useState<string>("");
+  const [timezone, setTimezone] = useState<string>("");
+
+  useEffect(() => {
+    async function getTime() {
+      try {
+        const response = await fetch(
+          `http://worldtimeapi.org/api/timezone/${timezone}`
+        );
+        const data = await response.json();
+        if (response.status !== 200) {
+          throw new Error("Something went wrong");
+        }
+
+        setClientIp(data.client_ip);
+        setCurrentTime(data.datetime);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    async function getCityAndCountry() {
+      try {
+        const response = await fetch(
+          `https://api.ipbase.com/v2/info?ip=${clientIp}`
+        );
+        const data = await response.json();
+        if (response.status !== 200) {
+          throw new Error("Something went wrong");
+        }
+        setCountry(data.data.location.country.alpha2);
+        setCity(data.data.location.city.name);
+        setTimezone(data.data.timezone.id);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    getCityAndCountry();
+    getTime();
+  }, []);
 
   const time = new Date(currentTime);
   const hours = time.getHours();
   const minutes = time.getMinutes();
-
-  useEffect(() => {
-    getTime();
-    getCityAndCountry();
-  }, []);
-
-  async function getTime() {
-    try {
-      const response = await fetch(
-        "http://worldtimeapi.org/api/timezone/Asia/Tbilisi"
-      );
-      const data = await response.json();
-      if (response.status !== 200) {
-        throw new Error("Something went wrong");
-      }
-
-      setClientIp(data.client_ip);
-      setCurrentTime(data.datetime);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  async function getCityAndCountry() {
-    try {
-      const response = await fetch(
-        `https://api.ipbase.com/v2/info?ip=${clientIp}`
-      );
-      const data = await response.json();
-      if (response.status !== 200) {
-        throw new Error("Something went wrong");
-      }
-      setCountry(data.location.country.alpha2);
-      setCity(data.city.name);
-      console.log(data);
-    } catch (error) {
-      console.error(error);
-    }
-  }
 
   return (
     <div className="time">

@@ -23,7 +23,7 @@ function Quotes(props: any) {
         <h3>"{quoteText}"</h3>
         <h2>{quoteAuthor}</h2>
       </div>
-      <button>
+      <button onClick={getQuotes}>
         <img src={refresh} alt="refreshBtn" />
       </button>
     </div>
