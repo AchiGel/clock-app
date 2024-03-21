@@ -55,21 +55,24 @@ function Time(props: any) {
 
   return (
     <div className="time">
-      <div className="day-time">
-        <img src={sunIcon} alt="" />
-        <span>GOOD MORNING</span>
+      <div>
+        <div className="day-time">
+          <img src={sunIcon} alt="" />
+          <span>GOOD MORNING</span>
+        </div>
+        <div className="clock">
+          <h2>
+            {hours}:{minutes}
+          </h2>
+          <span>BST</span>
+        </div>
+        <div className="city-name">
+          <h4>
+            IN {city}, {country}
+          </h4>
+        </div>
       </div>
-      <div className="clock">
-        <h2>
-          {hours}:{minutes}
-        </h2>
-        <span>BST</span>
-      </div>
-      <div className="city-name">
-        <h4>
-          IN {city}, {country}
-        </h4>
-      </div>
+
       <div className="more-less-button">
         <span>MORE</span>
         <button

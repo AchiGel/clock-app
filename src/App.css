@@ -21,3 +21,48 @@
   flex-direction: column;
   justify-content: space-between;
 }
+
+@media (min-width: 500px) {
+  .overlay {
+    padding: 80px 64px;
+  }
+
+  .quotes-box .quote h3,
+  .quotes-box .quote h2,
+  .overlay .time .day-time span,
+  .overlay .time .city-name h4 {
+    font-size: 18px;
+  }
+
+  .overlay .quotes-box .quote {
+    gap: 13px;
+  }
+  .overlay .time .clock h2 {
+    font-size: 175px;
+  }
+  .overlay .drop-down {
+    display: grid;
+    grid-template-columns: auto auto;
+    margin: 0px -64px -80px;
+  }
+
+  .overlay .drop-down div {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .overlay .drop-down div h3 {
+    font-size: 13px;
+  }
+
+  .overlay .drop-down div h4 {
+    font-size: 40px;
+  }
+}
+
+@media (min-width: 1000px) {
+  .overlay .time {
+    flex-direction: row;
+    align-items: flex-end;
+  }
+}
