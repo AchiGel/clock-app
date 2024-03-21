@@ -5,6 +5,12 @@
   gap: 16px;
 }
 
+.time .day-time {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
 .time .day-time span {
   font-size: 15px;
   font-weight: 400;

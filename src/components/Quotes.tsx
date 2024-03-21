@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import refresh from "../assets/desktop/icon-refresh.svg";
 import "../styles/quotes.css";
 
-function Quotes() {
+function Quotes(props: any) {
   const [quoteText, setQuoteText] = useState("");
   const [quoteAuthor, setQuoteAuthor] = useState("");
 
@@ -15,11 +15,10 @@ function Quotes() {
     const data = await response.json();
     setQuoteAuthor(data.author);
     setQuoteText(data.content);
-    console.log(data);
   }
 
   return (
-    <div className="quotes-box">
+    <div className={!props.isClicked ? "quotes-box" : "hidden"}>
       <div className="quote">
         <h3>"{quoteText}"</h3>
         <h2>{quoteAuthor}</h2>
