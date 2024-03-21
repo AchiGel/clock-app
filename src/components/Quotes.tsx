@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import refresh from "../assets/desktop/icon-refresh.svg";
+import "../styles/quotes.css";
 
 function Quotes() {
   const [quoteText, setQuoteText] = useState("");
@@ -19,8 +20,8 @@ function Quotes() {
 
   return (
     <div className="quotes-box">
-      <div>
-        <h3>{quoteText}</h3>
+      <div className="quote">
+        <h3>"{quoteText}"</h3>
         <h2>{quoteAuthor}</h2>
       </div>
       <button>
