@@ -1,5 +1,6 @@
 import "../styles/time.css";
 import arrowDown from "../assets/desktop/icon-arrow-down.svg";
+import arrowUp from "../assets/desktop/icon-arrow-up.svg";
 import sunIcon from "../assets/desktop/icon-sun.svg";
 import moonIcon from "../assets/desktop/icon-moon.svg";
 import { useEffect, useState } from "react";
@@ -53,20 +54,24 @@ function Time(props: any) {
   }, [timezone, clientIp]);
 
   const formattedTime = currentTime ? new Date(currentTime) : null;
-  const hours = formattedTime
+  const hours: string = formattedTime
     ? String(formattedTime.getHours()).padStart(2, "0")
     : "--";
-  const minutes = formattedTime
+  const minutes: string = formattedTime
     ? String(formattedTime.getMinutes()).padStart(2, "0")
     : "--";
 
-  if (parseFloat(hours) > 5 && parseFloat(hours) < 18) {
-    props.setIsDay(!props.isDay);
-  }
+  useEffect(() => {
+    if (parseFloat(hours) > 5 && parseFloat(hours) < 18) {
+      props.setIsDay(true);
+    } else {
+      props.setIsDay(false);
+    }
+  }, [hours, props]);
 
   return (
     <div className="time">
-      <div>
+      <div className="time-properties">
         <div className="day-time">
           <img
             src={
@@ -94,13 +99,13 @@ function Time(props: any) {
       </div>
 
       <div className="more-less-button">
-        <span>MORE</span>
+        <span>{!props.isClicked ? "more" : "less"}</span>
         <button
           onClick={() => {
             props.setIsClicked(!props.isClicked);
           }}
         >
-          <img src={arrowDown} alt="" />
+          <img src={!props.isClicked ? arrowDown : arrowUp} alt="" />
         </button>
       </div>
     </div>

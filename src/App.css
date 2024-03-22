@@ -50,6 +50,12 @@
     min-height: 100vh;
   }
 
+  .time .time-properties {
+    display: flex;
+    flex-direction: column;
+    grid-gap: 40px;
+  }
+
   .overlay {
     padding: 80px 64px;
   }
