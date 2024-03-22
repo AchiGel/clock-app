@@ -1,6 +1,7 @@
 import "../styles/time.css";
 import arrowDown from "../assets/desktop/icon-arrow-down.svg";
 import sunIcon from "../assets/desktop/icon-sun.svg";
+import moonIcon from "../assets/desktop/icon-moon.svg";
 import { useEffect, useState } from "react";
 
 function Time(props: any) {
@@ -16,15 +17,14 @@ function Time(props: any) {
         const response = await fetch(
           `http://worldtimeapi.org/api/timezone/${timezone}`
         );
-        const data = await response.json();
-        if (response.status !== 200) {
-          throw new Error("Something went wrong");
+        if (!response.ok) {
+          throw new Error("Failed to fetch time");
         }
-
+        const data = await response.json();
         setClientIp(data.client_ip);
         setCurrentTime(data.datetime);
-      } catch (error) {
-        console.error(error);
+      } catch (error: any) {
+        console.error("Error fetching time:", error.message);
       }
     }
 
@@ -33,32 +33,52 @@ function Time(props: any) {
         const response = await fetch(
           `https://api.ipbase.com/v2/info?ip=${clientIp}`
         );
-        const data = await response.json();
-        if (response.status !== 200) {
-          throw new Error("Something went wrong");
+        if (!response.ok) {
+          throw new Error("Failed to fetch location data");
         }
+        const data = await response.json();
         setCountry(data.data.location.country.alpha2);
         setCity(data.data.location.city.name);
         setTimezone(data.data.timezone.id);
-      } catch (error) {
-        console.error(error);
+      } catch (error: any) {
+        console.error("Error fetching location data:", error.message);
       }
     }
 
     getCityAndCountry();
-    getTime();
-  }, []);
+    const intervalId = setInterval(() => {
+      getTime();
+    }, 1000);
+    return () => clearInterval(intervalId);
+  }, [timezone, clientIp]);
 
-  const time = new Date(currentTime);
-  const hours = time.getHours();
-  const minutes = time.getMinutes();
+  const formattedTime = currentTime ? new Date(currentTime) : null;
+  const hours = formattedTime
+    ? String(formattedTime.getHours()).padStart(2, "0")
+    : "--";
+  const minutes = formattedTime
+    ? String(formattedTime.getMinutes()).padStart(2, "0")
+    : "--";
+
+  if (parseFloat(hours) > 5 && parseFloat(hours) < 18) {
+    props.setIsDay(!props.isDay);
+  }
 
   return (
     <div className="time">
       <div>
         <div className="day-time">
-          <img src={sunIcon} alt="" />
-          <span>GOOD MORNING</span>
+          <img
+            src={
+              parseFloat(hours) > 5 && parseFloat(hours) < 18
+                ? sunIcon
+                : moonIcon
+            }
+            alt=""
+          />
+          <span>
+            {parseFloat(hours) < 12 ? "Good Morning" : "Good afternoon"}
+          </span>
         </div>
         <div className="clock">
           <h2>
@@ -68,7 +88,7 @@ function Time(props: any) {
         </div>
         <div className="city-name">
           <h4>
-            IN {city}, {country}
+            IN {city || "--"}, {country || "--"}
           </h4>
         </div>
       </div>

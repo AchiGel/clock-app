@@ -13,6 +13,15 @@
   min-height: 100vh;
 }
 
+.app-night {
+  font-family: "Inter", sans-serif;
+  background-image: url(../src/assets/mobile/bg-image-nighttime.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  min-height: 100vh;
+}
+
 .overlay {
   background-color: #00000061;
   min-height: 100vh;
@@ -23,6 +32,24 @@
 }
 
 @media (min-width: 500px) {
+  .App {
+    font-family: "Inter", sans-serif;
+    background-image: url(../src/assets/tablet/bg-image-daytime.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    min-height: 100vh;
+  }
+
+  .app-night {
+    font-family: "Inter", sans-serif;
+    background-image: url(../src/assets/tablet/bg-image-nighttime.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    min-height: 100vh;
+  }
+
   .overlay {
     padding: 80px 64px;
   }
@@ -61,6 +88,24 @@
 }
 
 @media (min-width: 1000px) {
+  .App {
+    font-family: "Inter", sans-serif;
+    background-image: url(../src/assets/desktop/bg-image-daytime.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    min-height: 100vh;
+  }
+
+  .app-night {
+    font-family: "Inter", sans-serif;
+    background-image: url(../src/assets/desktop/bg-image-nighttime.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    min-height: 100vh;
+  }
+
   .overlay .time {
     flex-direction: row;
     align-items: flex-end;

@@ -6,11 +6,17 @@ import DropDown from "./components/DropDown";
 
 function App() {
   const [isClicked, setIsClicked] = useState(false);
+  const [isDay, setIsDay] = useState(false);
   return (
-    <div className="App">
+    <div className={isDay ? "App" : "app-night"}>
       <div className="overlay">
         <Quotes isClicked={isClicked} />
-        <Time isClicked={isClicked} setIsClicked={setIsClicked} />
+        <Time
+          isDay={isDay}
+          setIsDay={setIsDay}
+          isClicked={isClicked}
+          setIsClicked={setIsClicked}
+        />
         {isClicked ? <DropDown /> : null}
       </div>
     </div>
